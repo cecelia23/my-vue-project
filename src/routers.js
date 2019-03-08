@@ -8,6 +8,7 @@ import countPage from './pages/details/count'
 import analysisPage from './pages/details/analysis'
 import forecastPage from './pages/details/forecast'
 import orderListPage from './pages/orderList'
+import testUI from './components/test-ui'
 const routers = [
   {
     path: '/',
@@ -39,6 +40,10 @@ const routers = [
   {
     path: '/order',
     component: orderListPage
+  },
+  {
+    path: '/test',
+    component: testUI
   }
   // {
   //   path: '/apple',
