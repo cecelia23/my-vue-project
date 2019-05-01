@@ -1,4 +1,4 @@
-# y
+# vue-first-leaner
 
 > A Vue.js project
 
