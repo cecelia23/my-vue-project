@@ -12,7 +12,7 @@
 </div>
 </template>
 <script>
-import { eventBus } from '../eventBus.js'
+import eventBus from '../eventBus.js'
 export default{
   props: {
     selection: {
@@ -32,16 +32,17 @@ export default{
     }
   },
   mounted () {
-    // 内层监听，执行动作
+    // 内层监听，执行动作，列表收起
     eventBus.$on('reset-components', () => {
       this.isDrop = false
     })
   },
   methods: {
     toggleDrop (event) {
-      eventBus.$emit('reset-components')
       // 阻止冒泡，不会传到外层
       event.stopPropagation()
+      // 其他的selection组件收起
+      eventBus.$emit('reset-components')
       this.isDrop = !this.isDrop
     },
     chooseSelection (item, index) {
@@ -70,7 +71,7 @@ export default{
 
 .selection-show .arrow{
   display:inline-block;
-   height:5px;
+  height:5px;
   border-left:4px solid transparent;
   border-right:4px solid transparent;
   border-top: 5px solid #000;

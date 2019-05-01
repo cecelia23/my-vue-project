@@ -23,6 +23,7 @@
         </li>
       </ul>
     </div>
+    <div :class="[activeClass, errorClass]"> hello</div>
   </div>
   <div class="index-right">
     <!-- 幻灯片切换slide -->
@@ -66,6 +67,8 @@ export default{
   data () {
     return {
       invTime: 2000,
+      activeClass: 'active',
+      errorClass: 'text-danger',
       slides: [
         {
           src: require('../assets/slideShow/pic1.jpg'),

@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div>
       <div class="dialog-cover" v-if="isShow" @click="closeMyself"></div>
       <transition name="drop">
         <div class="dialog-content" v-if="isShow">

@@ -101,7 +101,7 @@ module.exports = new Promise((resolve, reject) => {
   
 // apiServer.use(middlewares)  
 // apiServer.use(apiRouter)  
-// apiServer.listen(3000, () => {                 //监听端口  
+// apiServer.listen(3001, () => {                 //监听端口  
 //   console.log('JSON Server is running')  
 // }) 
 
@@ -111,12 +111,12 @@ const apiServer = express()
 const bodyParser = require('body-parser')
 apiServer.use(bodyParser.urlencoded({extended:true}))
 apiServer.use(bodyParser.json())
-const apiRouter=express.Router()
+const apiRouter = express.Router()
 var fs = require('fs') 
 apiRouter.route('/:apiName') //接口路径:apiName查询参数，all所有方法包括post,get 
   .all(function (req, res) { 
     fs.readFile('./db.json', 'utf8', function (err, data) {  //读取接口文件 
-      if (err) throw err 
+      if (err) throw err
       var data = JSON.parse(data) //解析为js对象
       if (data[req.params.apiName]) { 
         res.json(data[req.params.apiName]) 
@@ -128,10 +128,10 @@ apiRouter.route('/:apiName') //接口路径:apiName查询参数，all所有方�
   }) 
    
 apiServer.use(apiRouter); 
-apiServer.listen(3000, function (err) { 
+apiServer.listen(3001, function (err) { 
   if (err) { 
     console.log(err) 
     return 
   } 
-  console.log('Listening at http://localhost:' + 3000 + '\n') 
+  console.log('Listening at http://localhost:' + 0 + '\n') 
 })  

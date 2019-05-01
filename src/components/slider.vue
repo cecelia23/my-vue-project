@@ -1,26 +1,26 @@
 <template>
 <div class="slide-show" @mouseover="clearInv" @mouseout="runInv">
-<div class="slide-img">
-  <a :href="slides[nowIndex].href">
-    <!-- <transition name="slide-trans">
-      <img v-if="isShow" :src="slides[nowIndex].src">
-    </transition>
-    <transition name="slide-trans-old">
-      <img v-if="!isShow" :src="slides[nowIndex].src">
-    </transition> -->
-    <img :src="slides[nowIndex].src">
-  </a>
-</div>
-<h2>{{slides[nowIndex].title}}</h2>
-<div class="slide-pages">
-  <ul>
-    <li @click="goto(prevIndex)">&lt;</li>
-    <li v-for="(item, index) in slides" :key="item.id" @click="goto(index)">
-      {{ index + 1 }}
-    </li>
-    <li @click="goto(nextIndex)">&gt;</li>
-  </ul>
-</div>
+  <div class="slide-img">
+    <a :href="slides[nowIndex].href">
+      <!-- <transition name="slide-trans">
+        <img v-if="isShow" :src="slides[nowIndex].src">
+      </transition>
+      <transition name="slide-trans-old">
+        <img v-if="!isShow" :src="slides[nowIndex].src">
+      </transition> -->
+      <img :src="slides[nowIndex].src">
+    </a>
+  </div>
+  <h2>{{slides[nowIndex].title}}</h2>
+  <div class="slide-pages">
+    <ul>
+      <li @click="goto(prevIndex)">&lt;</li>
+      <li v-for="(item, index) in slides" :key="item.id" @click="goto(index)">
+        {{ index + 1 }}
+      </li>
+      <li @click="goto(nextIndex)">&gt;</li>
+    </ul>
+  </div>
 </div>
 </template>
 <script>

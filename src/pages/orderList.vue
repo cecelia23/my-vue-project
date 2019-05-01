@@ -4,6 +4,7 @@
       <v-selection :selection="productList" @on-change="changeParams('product',$event)"></v-selection>
     </div>
     <div class="order-list-container">选择产品2：
+     <!-- <c-selection @on-change="changeParams('product',$event)"></c-selection> -->
       <v-selection :selection="productList" @on-change="changeParams('product',$event)"></v-selection>
     </div>
     <div class="order-list-container">开始时间：
@@ -11,28 +12,35 @@
              @close="isShow = false"
              v-if="isShow"
              v-model="date"></date-picker> -->
-      <datepicker :readonly="true" :value="startDate" format="YYYY-MM-DD" name="startdate" @on-change="changeStartDate"></datepicker>
+      <datepicker  :value="startDate" format="YYYY-MM-DD" name="startdate" @on-change="changeStartDate"></datepicker>
     </div>
     <div class="order-list-container">结束时间：
-      <datepicker :readonly="true" :value="endDate" format="YYYY-MM-DD" name="enddate" @on-change="changeEndDate"></datepicker>
+      <!-- <my-date-picker :date="endtime" :option="option" :limit="limit"></my-date-picker> -->
+      <datepicker  :value="endDate" format="YYYY-MM-DD" name="enddate" @on-change="changeEndDate"></datepicker>
     </div>
     <div class="order-list-container">关键词：
       <input type="text" v-model.lazy="keyword">
     </div>
-    <table class="order-list-table">
-      <tr class="order-list-head">
-        <th v-for="head in headList" :key="head.id" @click="changeOrder(head)" :class="{active:head.active}">{{head.label}}</th>
-      </tr>
-      <tr v-for="item in tableList" :key="item.id">
-        <td v-for="head in headList" :key="head.id" >{{item[head.key]}}</td>
-      </tr>
-    </table>
+    <div class="order-list-table">
+      <table>
+        <tr class="order-list-head">
+          <th v-for="head in headList" :key="head.id" @click="changeOrder(head)" :class="{active:head.active}">{{head.label}}</th>
+        </tr>
+        <tr v-for="item in tableList" :key="item.id">
+          <td v-for="head in headList" :key="head.id" >{{item[head.key]}}</td>
+        </tr>
+      </table>
+    </div>
   </div>
 </template>
 <script>
 import vSelection from '../components/selection'
-import datepicker from 'vue-date-picker'
+import datepicker from '../components/myDatePicker'
+// import cSelection from '../components/selectCity'
+// import myDatepicker from 'vue-datepicker/vue-datepicker-es6.vue'
 
+// try vuex-helper in methods
+import { mapActions } from 'vuex'
 import _ from 'lodash'
 
 export default{
@@ -95,6 +103,7 @@ export default{
     }
   },
   computed: {
+    // 计算属性：从store.state中获取，但页面不能直接获取state属性，所以调用getters
     tableList () {
       return this.$store.getters.getOrderList
     }
@@ -102,14 +111,18 @@ export default{
   components: {
     vSelection,
     datepicker
+    // cSelection
   },
   methods: {
+    ...mapActions([
+      'fetchOrderList'
+    ]),
     changeParams (attr, val) {
       // this[attr] = val.label
       // this.getList()
       // 更新参数
       this.$store.commit('updateParams', {
-        key: 'product',
+        key: attr,
         value: val.label
       })
       // 用新的state对象参数去请求数据
@@ -118,12 +131,12 @@ export default{
     changeStartDate (date) {
       this.startDate = date
       console.log(this.startDate)
-      this.getList()
+      this.fetchOrderList()
     },
     changeEndDate (date) {
       this.endDate = date
-      console(this.endDate)
-      this.getList()
+      console.log(this.endDate)
+      this.fetchOrderList()
     },
     getList () {
       let reqParam = {
@@ -132,9 +145,15 @@ export default{
         startDate: this.startDate,
         endDate: this.endDate
       }
-      this.$http.post('/api/orderList', reqParam)
+      // this.$http.post('/api/orderList', reqParam)
+      //   .then((res) => {
+      //     // console.log(res.data.list)
+      //     this.tableList = res.data.list
+      //   }, (err) => {
+      //     console.log(err)
+      //   })
+      this.$ajax.post('/api/orderList', reqParam)
         .then((res) => {
-          // console.log(res.data.list)
           this.tableList = res.data.list
         }, (err) => {
           console.log(err)
@@ -167,11 +186,10 @@ export default{
 }
 </script>
 <style scoped>
-/* .order-wrap{
+.order-wrap{
   width:100%;
-  position:fixed;
-  background: tomato;
-} */
+  /* background: tomato; */
+}
 .order-list-container{
   display:inline-block;
   margin:20px 30px ;
@@ -179,10 +197,10 @@ export default{
   line-height: 1.8;
 }
 .order-list-table{
-  position:absolute;
-  left:50%;
-  width:800px;
-  margin-left:-400px;
+  text-align: center;
+}
+.order-list-table table{
+  margin:auto;
 }
 .order-list-head th.active{
   background:#4fc08d;

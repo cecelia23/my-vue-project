@@ -163,11 +163,16 @@ export default{
         period: this.period.value,
         versions: buyVersions.join(',')
       }
-      this.$http.post('/api/getPrice', resParams).then((res) => {
+      this.$ajax.post('/api/getPrice', resParams).then((res) => {
         this.price = res.data.amount
       }, (err) => {
         console.log(err)
       })
+      // this.$http.post('/api/getPrice', resParams).then((res) => {
+      //   this.price = res.data.amount
+      // }, (err) => {
+      //   console.log(err)
+      // })
     },
     payDialogClose () {
       this.isShowPayDialog = false
@@ -191,7 +196,15 @@ export default{
         versions: buyVersions.join(','),
         bankId: this.bankId
       }
-      this.$http.post('/api/createOrder', resParams).then((res) => {
+      // this.$http.post('/api/createOrder', resParams).then((res) => {
+      //   this.orderId = res.data.orderId
+      //   this.isShowCheckOrder = true
+      //   this.isShowPayDialog = false
+      //   console.log(this.orderId)
+      // }, (err) => {
+      //   console.log(err)
+      // })
+      this.$ajax.post('/api/createOrder', resParams).then((res) => {
         this.orderId = res.data.orderId
         this.isShowCheckOrder = true
         this.isShowPayDialog = false

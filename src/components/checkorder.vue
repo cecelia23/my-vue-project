@@ -32,13 +32,24 @@ export default {
   },
   methods: {
     checkOrder (orderId) {
-      this.$http.post('/api/checkOrder', {
+      // this.$http.post('/api/checkOrder', {
+      //   orderId: this.orderId
+      // }).then((res) => {
+      //   this.isShowPaySuccess = true
+      //   this.$emit('on-close-check')
+      // }, (err) => {
+      //   console.log(err)
+      //   this.isShowFailDialog = true
+      //   this.$emit('on-close-check')
+      // })
+      this.$ajax.post('/api/checkOrder', {
         orderId: this.orderId
       }).then((res) => {
         this.isShowPaySuccess = true
         this.$emit('on-close-check')
-      },(err) => {
-        this.isShowFailDialog = true
+      }, (err) => {
+        console.log(err)
+        this.isShowPayFail = true
         this.$emit('on-close-check')
       })
     },

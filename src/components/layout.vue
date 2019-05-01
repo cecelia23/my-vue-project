@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { eventBus } from '../eventBus'
+import eventBus from '../eventBus'
 import myDialog from './dialog'
 import logForm from './logform'
 import regForm from './regform'
@@ -190,6 +190,7 @@ body {
   width: 1200px;
   height:1000px;
   margin: 0 auto;
+  overflow:hidden;
 }
 .hr {
   height: 1px;
